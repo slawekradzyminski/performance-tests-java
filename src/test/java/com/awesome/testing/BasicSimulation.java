@@ -1,7 +1,5 @@
 package com.awesome.testing;
 
-import java.time.Duration;
-
 import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.*;
 
