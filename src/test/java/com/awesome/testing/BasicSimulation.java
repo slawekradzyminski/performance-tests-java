@@ -3,6 +3,8 @@ package com.awesome.testing;
 import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.*;
 
+import java.util.List;
+
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
@@ -23,6 +25,12 @@ public class BasicSimulation extends Simulation {
             );
 
     {
-        setUp(scn.injectOpen(atOnceUsers(1)).protocols(httpProtocol));
+        setUp(scn.injectOpen(atOnceUsers(1)).protocols(httpProtocol))
+                .assertions(
+                        List.of(
+                                global().responseTime().max().lt(3000),
+                                global().successfulRequests().percent().is(100d)
+                        )
+                );
     }
 }
