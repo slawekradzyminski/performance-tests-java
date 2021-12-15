@@ -66,9 +66,6 @@
         <groupId>io.gatling</groupId>
         <artifactId>gatling-maven-plugin</artifactId>
         <version>${gatling-maven-plugin.version}</version>
-        <configuration>
-          <simulationClass>com.awesome.testing.BasicSimulation</simulationClass>
-        </configuration>
       </plugin>
     </plugins>
   </build>
