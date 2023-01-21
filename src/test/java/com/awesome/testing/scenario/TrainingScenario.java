@@ -7,7 +7,7 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 
 public class TrainingScenario {
 
-    public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenarion")
+    public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenario")
             .exec(LOGIN_REQUEST);
 
 }
