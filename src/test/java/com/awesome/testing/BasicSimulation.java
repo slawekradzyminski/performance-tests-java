@@ -14,8 +14,8 @@ public class BasicSimulation extends Simulation {
 
     {
         setUp(TRAINING_SCENARIO.injectOpen(
-//                atOnceUsers(2)
-                rampUsers(200).during(Duration.of(60, ChronoUnit.SECONDS))
+                atOnceUsers(2)
+//                rampUsers(200).during(Duration.of(60, ChronoUnit.SECONDS))
                 )
                 .protocols(HTTP_CONFIG))
                 .assertions(ASSERTIONS);
