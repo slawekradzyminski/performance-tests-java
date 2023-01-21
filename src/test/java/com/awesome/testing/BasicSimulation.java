@@ -10,14 +10,14 @@ import static io.gatling.javaapi.http.HttpDsl.*;
 
 public class BasicSimulation extends Simulation {
 
-    private static final String json = "application/json";
+    private static final String JSON = "application/json";
 
     private final HttpProtocolBuilder httpProtocol = http
-            .baseUrl("http://localhost:4000")
-            .acceptHeader(json)
-            .contentTypeHeader(json);
+            .baseUrl("http://localhost:4001")
+            .acceptHeader(JSON)
+            .contentTypeHeader(JSON);
 
-    ScenarioBuilder scn = scenario("Training scenarion")
+    ScenarioBuilder scn = scenario("Training scenario")
             .exec(http("Admin login request")
                     .post("/users/signin")
                     .body(ElFileBody("bodies/adminLogin.json"))
