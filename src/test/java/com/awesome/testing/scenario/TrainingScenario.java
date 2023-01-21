@@ -11,7 +11,7 @@ public class TrainingScenario {
 
     private static final Batchable<String> CREDENTIALS_FEEDER = csv("data/credentials.csv").circular();
 
-    public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenarion")
+    public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenario")
             .feed(CREDENTIALS_FEEDER)
             .exec(LOGIN_REQUEST);
 
