@@ -1,36 +1,29 @@
 package com.awesome.testing;
 
 import io.gatling.javaapi.core.*;
-import io.gatling.javaapi.http.*;
 
+import java.time.Duration;
 import java.util.List;
 
+import static com.awesome.testing.config.HttpConfig.HTTP_PROTOCOL;
+import static com.awesome.testing.journey.UserJourney.ONE_SESSION_USER_JOURNEY;
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.gatling.javaapi.http.HttpDsl.*;
 
 public class BasicSimulation extends Simulation {
 
-    private static final String JSON = "application/json";
-
-    private final HttpProtocolBuilder httpProtocol = http
-            .baseUrl("http://localhost:4001")
-            .acceptHeader(JSON)
-            .contentTypeHeader(JSON);
-
-    ScenarioBuilder scn = scenario("Training scenario")
-            .exec(http("Admin login request")
-                    .post("/users/signin")
-                    .body(ElFileBody("bodies/adminLogin.json"))
-                    .check(status().is(200))
-            );
+    private static final List<Assertion> ASSERTIONS = List.of(
+            global().responseTime().max().lt(3000),
+            global().successfulRequests().percent().is(100d)
+    );
 
     {
-        setUp(scn.injectOpen(atOnceUsers(1)).protocols(httpProtocol))
-                .assertions(
-                        List.of(
-                                global().responseTime().max().lt(3000),
-                                global().successfulRequests().percent().is(100d)
-                        )
-                );
+
+        setUp(ONE_SESSION_USER_JOURNEY
+                .injectClosed(
+                        constantConcurrentUsers(10).during(Duration.ofSeconds(60)),
+                        rampConcurrentUsers(10).to(30).during(Duration.ofSeconds(60))
+                )
+                .protocols(HTTP_PROTOCOL))
+                .assertions(ASSERTIONS);
     }
 }
