@@ -18,7 +18,10 @@ public class TrainingScenario {
             .exec(LOGIN_REQUEST)
             .pause(5)
             .repeat(2).on(
-                exec(GET_ALL_USERS_REQUEST)
+                    exec(GET_ALL_USERS_REQUEST)
+            )
+            .randomSwitch().on(
+                    percent(50.0).then(exec(GET_ALL_USERS_REQUEST))
             )
             .pause(5)
             .randomSwitch().on(
