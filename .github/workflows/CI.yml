@@ -1,0 +1,32 @@
+name: Java Gatling Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Run Docker container
+      run: |
+        docker run -d --name backend -p 4001:4001 slawekradzyminski/backend:1.2
+
+    - name: Wait for Docker container to be ready
+      run: |
+        echo "Waiting for backend to be ready..."
+        sleep 3
+
+    - name: Install Maven dependencies
+      run: ./mvnw install -DskipTests
+
+    - name: Run Gatling tests
+      run: ./mvnw gatling:test -Dgatling.simulationClass=com.awesome.testing.BasicSimulation
