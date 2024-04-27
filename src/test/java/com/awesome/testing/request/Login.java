@@ -16,4 +16,11 @@ public class Login {
                     .check(status().is(200))
                     .check(jsonPath("$.token").exists().saveAs("token"));
 
+    public static final HttpRequestActionBuilder ADMIN_LOGIN_REQUEST =
+            http("Login request")
+                    .post("/users/signin")
+                    .body(ElFileBody("bodies/adminLogin.json"))
+                    .check(status().is(200))
+                    .check(jsonPath("$.token").exists().saveAs("token"));
+
 }
