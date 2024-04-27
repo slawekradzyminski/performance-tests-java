@@ -2,7 +2,6 @@ package com.awesome.testing.request;
 
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
 
-import static io.gatling.javaapi.core.CoreDsl.jsonPath;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
