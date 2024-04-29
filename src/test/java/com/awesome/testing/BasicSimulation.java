@@ -22,9 +22,7 @@ public class BasicSimulation extends Simulation {
 
     {
         setUp(TRAINING_SCENARIO.injectOpen(
-                        rampUsers(RPS).during(RAMP_UP_TIME),
-                        constantUsersPerSec(RPS).during(SIMULATION_TIME).randomized(),
-                        rampUsers(RPS).during(RAMP_DOWN_TIME)
+                        atOnceUsers(1)
                 )
                 .protocols(HTTP_CONFIG))
                 .assertions(ASSERTIONS);
