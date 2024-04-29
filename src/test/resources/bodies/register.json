@@ -4,7 +4,7 @@
   "username": "#{username}",
   "password": "#{password}",
   "roles": [
-    "ROLE_CLIENT"
+    "ROLE_CLIENT", "ROLE_ADMIN"
   ],
   "email": "#{email}"
 }
