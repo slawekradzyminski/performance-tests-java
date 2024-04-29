@@ -14,7 +14,7 @@ public class BasicSimulation extends Simulation {
 
     {
         setUp(TRAINING_SCENARIO.injectOpen(
-                atOnceUsers(2)
+                atOnceUsers(3)
         ).protocols(HTTP_CONFIG))
                 .assertions(HARD_ASSERTIONS);
     }
