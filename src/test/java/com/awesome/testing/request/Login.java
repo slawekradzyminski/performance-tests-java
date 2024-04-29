@@ -1,7 +1,6 @@
 package com.awesome.testing.request;
 
 import com.awesome.testing.dto.LoginRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.gatling.javaapi.core.Body;
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
 import lombok.SneakyThrows;
