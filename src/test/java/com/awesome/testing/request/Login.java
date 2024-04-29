@@ -2,6 +2,7 @@ package com.awesome.testing.request;
 
 import com.awesome.testing.dto.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.gatling.javaapi.core.Body;
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
 import lombok.SneakyThrows;
 
@@ -12,17 +13,17 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class Login {
 
-    public static final HttpRequestActionBuilder LOGIN_REQUEST = http("Login: POST /users/signin")
-            .post("/users/signin")
-            .body(ElFileBody("bodies/login.json"))
-            .check(status().is(200))
-            .check(jsonPath("$.token").exists().saveAs("token"));
+    public static final HttpRequestActionBuilder LOGIN_REQUEST = login(ElFileBody("bodies/login.json"));
 
-    public static final HttpRequestActionBuilder ADMIN_LOGIN_REQUEST = http("Login: POST /users/signin")
-            .post("/users/signin")
-            .body(StringBody(getAdminLoginBody()))
-            .check(status().is(200))
-            .check(jsonPath("$.token").exists().saveAs("token"));
+    public static final HttpRequestActionBuilder ADMIN_LOGIN_REQUEST = login(StringBody(getAdminLoginBody()));
+
+    private static HttpRequestActionBuilder login(Body.WithString body) {
+        return http("Login: POST /users/signin")
+                .post("/users/signin")
+                .body(body)
+                .check(status().is(200))
+                .check(jsonPath("$.token").exists().saveAs("token"));
+    }
 
     @SneakyThrows
     private static String getAdminLoginBody() {
