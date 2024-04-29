@@ -44,6 +44,12 @@ jobs:
         ref: 'gh-pages'
         path: 'gh-pages'
 
+    - name: Clear old reports
+      run: |
+        cd gh-pages
+        git rm -rf .
+        git clean -fxd
+
     - name: Copy report to gh-pages
       run: |
         cp -r ${{ steps.find-report.outputs.REPORT_DIR }}/* gh-pages/
