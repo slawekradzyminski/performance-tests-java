@@ -5,7 +5,6 @@ import com.awesome.testing.dto.Roles;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.gatling.javaapi.core.Session;
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
-import lombok.SneakyThrows;
 import net.datafaker.Faker;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class EditUser {
 
     private static final Faker FAKER = new Faker();
     
-    public static final HttpRequestActionBuilder EDIT_USER_REQUEST = http("Edit user: PUT /users/#{username}")
+    public static final HttpRequestActionBuilder EDIT_USER_REQUEST = http("Edit user: PUT /users/{username}")
             .put("/users/#{username}")
             .body(StringBody(buildRequestBody()))
             .header("Authorization", "Bearer #{token}")

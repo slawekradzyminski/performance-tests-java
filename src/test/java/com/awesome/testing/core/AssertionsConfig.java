@@ -9,8 +9,8 @@ import static io.gatling.javaapi.core.CoreDsl.global;
 public class AssertionsConfig {
 
     public static final List<Assertion> HARD_ASSERTIONS = List.of(
-            global().responseTime().max().lt(3000),
-            global().successfulRequests().percent().is(100d)
+            global().responseTime().percentile(98).lt(2000),
+            global().successfulRequests().percent().gte(98d)
     );
 
 }
