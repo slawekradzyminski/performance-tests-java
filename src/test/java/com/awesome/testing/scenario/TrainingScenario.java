@@ -15,18 +15,20 @@ import static io.gatling.javaapi.core.CoreDsl.*;
  */
 public class TrainingScenario {
 
-    public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenario")
-            .feed(CREDENTIALS_FEEDER)
-            .exec(REGISTER_REQUEST) //
-            .pause(5)
-            .exec(LOGIN_REQUEST) // 120 rpm / 2 rps
-            .pause(1) 
-            .repeat(2).on(exec(GET_USERS_REQUEST)) // 240 rpm / 4 rps
-            .pause(2)
-            .repeat(3).on(exec(GET_SINGLE_USER_REQUEST)) // 360 rpm / 6 rps
-            .pause(4)
-            .randomSwitch().on(
-                    percent(50).then(exec(EDIT_USER_REQUEST)) // 60 rpm / 1 rps
-            );
+    public static ScenarioBuilder getTrainingScenario(String appendix) {
+        return scenario("Training scenario " + appendix)
+                .feed(CREDENTIALS_FEEDER)
+                .exec(REGISTER_REQUEST)
+                .pause(5)
+                .exec(LOGIN_REQUEST)
+                .pause(1)
+                .repeat(2).on(exec(GET_USERS_REQUEST))
+                .pause(2)
+                .repeat(3).on(exec(GET_SINGLE_USER_REQUEST))
+                .pause(4)
+                .randomSwitch().on(
+                        percent(50).then(exec(EDIT_USER_REQUEST))
+                );
+    }
 
 }

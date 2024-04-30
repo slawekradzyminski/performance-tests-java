@@ -6,7 +6,7 @@ import java.time.Duration;
 
 import static com.awesome.testing.core.AssertionsConfig.HARD_ASSERTIONS;
 import static com.awesome.testing.core.HttpConfig.HTTP_CONFIG;
-import static com.awesome.testing.scenario.TrainingScenario.TRAINING_SCENARIO;
+import static com.awesome.testing.scenario.TrainingScenario.getTrainingScenario;
 import static io.gatling.javaapi.core.CoreDsl.constantUsersPerSec;
 import static io.gatling.javaapi.core.CoreDsl.rampUsersPerSec;
 
@@ -21,7 +21,7 @@ public class BasicSimulation extends Simulation {
 
     {
         setUp(
-                TRAINING_SCENARIO.injectOpen(
+                getTrainingScenario("Load").injectOpen(
                                 // 1 ramp up (rozgrzanie JVM, wyskalowanie w górę)
                                 rampUsersPerSec(0).to(LOGIN_RPS).during(Duration.ofMinutes(2)),
                                 // 2 peak traffic (czy spełniamy wymagania, na tyle długi żeby w czasie trwania testu poszedł przynajmniej jeden Garbage Collector)
