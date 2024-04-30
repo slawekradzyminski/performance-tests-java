@@ -1,6 +1,6 @@
 package com.awesome.testing.request;
 
-import com.awesome.testing.dto.LoginRequest;
+import com.awesome.testing.dto.LoginRequestDto;
 import io.gatling.javaapi.core.Body;
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
 import lombok.SneakyThrows;
@@ -26,8 +26,8 @@ public class Login {
 
     @SneakyThrows
     private static String getAdminLoginBody() {
-        LoginRequest loginRequest = new LoginRequest("admin", "admin");
-        return OBJECT_MAPPER.writeValueAsString(loginRequest);
+        LoginRequestDto loginRequestDto = new LoginRequestDto("admin", "admin");
+        return OBJECT_MAPPER.writeValueAsString(loginRequestDto);
     }
 
 }

@@ -3,6 +3,7 @@ package com.awesome.testing.scenario;
 import io.gatling.javaapi.core.ScenarioBuilder;
 
 import static com.awesome.testing.feeder.CredentialsFeeder.CREDENTIALS_FEEDER;
+import static com.awesome.testing.request.EditUser.EDIT_USER_REQUEST;
 import static com.awesome.testing.request.GetSingleUser.GET_SINGLE_USER_REQUEST;
 import static com.awesome.testing.request.Login.LOGIN_REQUEST;
 import static com.awesome.testing.request.Register.REGISTER_REQUEST;
@@ -22,6 +23,8 @@ public class TrainingScenario {
             .pause(1) 
             .exec(GET_USERS_REQUEST)
             .pause(2)
-            .exec(GET_SINGLE_USER_REQUEST);
+            .exec(GET_SINGLE_USER_REQUEST)
+            .pause(4)
+            .exec(EDIT_USER_REQUEST);
 
 }

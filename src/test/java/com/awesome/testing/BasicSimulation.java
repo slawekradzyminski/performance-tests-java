@@ -13,9 +13,9 @@ import static io.gatling.javaapi.core.CoreDsl.*;
 public class BasicSimulation extends Simulation {
 
     {
-        setUp(TRAINING_SCENARIO.injectOpen(
-                atOnceUsers(3)
-        ).protocols(HTTP_CONFIG))
+        setUp(
+                TRAINING_SCENARIO.injectOpen(atOnceUsers(3))
+                        .protocols(HTTP_CONFIG))
                 .assertions(HARD_ASSERTIONS);
     }
 }
