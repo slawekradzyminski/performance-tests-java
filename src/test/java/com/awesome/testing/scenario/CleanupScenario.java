@@ -12,7 +12,7 @@ import static io.gatling.javaapi.core.CoreDsl.*;
 public class CleanupScenario {
 
     @SuppressWarnings("ConstantConditions")
-    public static final ScenarioBuilder CLEANUP_SCENARIO = scenario("Training scenario")
+    public static final ScenarioBuilder CLEANUP_SCENARIO = scenario("Cleanup scenario")
             .exec(ADMIN_LOGIN_REQUEST)
             .pause(1)
             .exec(GET_USERS_FOR_CLEANUP_SIMULATION)
