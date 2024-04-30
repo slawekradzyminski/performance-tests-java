@@ -17,16 +17,16 @@ public class TrainingScenario {
 
     public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenario")
             .feed(CREDENTIALS_FEEDER)
-            .exec(REGISTER_REQUEST) // tyle samo co logowań
+            .exec(REGISTER_REQUEST) //
             .pause(5)
-            .exec(LOGIN_REQUEST) // request referencyjny -> metryką którą raportujemy i którą posługujemy w projekcie
+            .exec(LOGIN_REQUEST) // 120 rpm / 2 rps
             .pause(1) 
-            .repeat(2).on(exec(GET_USERS_REQUEST))
+            .repeat(2).on(exec(GET_USERS_REQUEST)) // 240 rpm / 4 rps
             .pause(2)
-            .repeat(3).on(exec(GET_SINGLE_USER_REQUEST))
+            .repeat(3).on(exec(GET_SINGLE_USER_REQUEST)) // 360 rpm / 6 rps
             .pause(4)
             .randomSwitch().on(
-                    percent(50).then(exec(EDIT_USER_REQUEST))
+                    percent(50).then(exec(EDIT_USER_REQUEST)) // 60 rpm / 1 rps
             );
 
 }

@@ -14,8 +14,8 @@ public class CredentialsFeeder {
 
     public static final Iterator<Map<String, Object>> CREDENTIALS_FEEDER =
             Stream.generate((Supplier<Map<String, Object>>) () -> Map.of(
-                            "firstName", FAKER.name().firstName(),
-                            "lastName", FAKER.name().lastName(),
+                            "firstName", FAKER.name().firstName() + "ye",
+                            "lastName", FAKER.name().lastName() + "ye",
                             "username", FAKER.internet().username(),
                             "password", FAKER.internet().password(),
                             "email", FAKER.internet().emailAddress()
