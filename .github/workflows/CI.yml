@@ -16,14 +16,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Run Docker container
-      run: |
-        docker run -d --name backend -p 4001:4001 slawekradzyminski/backend:1.2
+    - name: Checkout external repository
+      uses: actions/checkout@v3
+      with:
+        repository: 'slawekradzyminski/awesome-localstack'
+        path: 'awesome-localstack'
 
-    - name: Wait for Docker container to be ready
+    - name: Run Docker Compose
       run: |
-        echo "Waiting for backend to be ready..."
-        sleep 3
+        cd awesome-localstack
+        chmod +x run-docker-compose.sh
+        ./run-docker-compose.sh
 
     - name: Install Maven dependencies
       run: ./mvnw install -DskipTests
