@@ -25,8 +25,8 @@ jobs:
     - name: Run Docker Compose
       run: |
         cd awesome-localstack
-        chmod +x run-docker-compose.sh
-        ./run-docker-compose.sh
+        chmod +x run-docker-compose-ci.sh
+        ./run-docker-compose-ci.sh
 
     - name: Install Maven dependencies
       run: ./mvnw install -DskipTests
