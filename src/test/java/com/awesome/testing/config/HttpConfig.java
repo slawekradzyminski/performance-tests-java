@@ -1,4 +1,4 @@
-package com.awesome.testing.core;
+package com.awesome.testing.config;
 
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 
