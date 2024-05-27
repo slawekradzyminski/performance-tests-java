@@ -9,7 +9,7 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 
 public class TrainingScenario {
 
-    private static final Batchable<String> CREDENTIALS_FEEDER = csv("data/credential.csv").circular();
+    private static final Batchable<String> CREDENTIALS_FEEDER = csv("data/credentials.csv").circular();
 
     public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenario")
             .feed(CREDENTIALS_FEEDER)
