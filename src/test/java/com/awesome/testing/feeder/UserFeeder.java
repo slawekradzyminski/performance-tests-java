@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static com.awesome.testing.util.Random.getRandomEmail;
+import static com.awesome.testing.util.Random.getRandomString;
+
 public class UserFeeder {
 
     public static final Iterator<Map<String, Object>> CREDENTIALS_FEEDER =
@@ -18,13 +21,5 @@ public class UserFeeder {
                             "email", getRandomEmail()
                     )
             ).iterator();
-
-    private static String getRandomString() {
-        return RandomStringUtils.randomAlphanumeric(5);
-    }
-
-    private static String getRandomEmail() {
-        return getRandomString() + "@foo.com";
-    }
 
 }
