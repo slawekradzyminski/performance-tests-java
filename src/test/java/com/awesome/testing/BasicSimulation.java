@@ -1,36 +1,30 @@
 package com.awesome.testing;
 
 import io.gatling.javaapi.core.*;
-import io.gatling.javaapi.http.*;
 
-import java.util.List;
+import java.time.Duration;
 
+import static com.awesome.testing.core.FunctionalAssertions.ASSERTIONS;
+import static com.awesome.testing.core.HttpConfig.HTTP_CONFIG;
+import static com.awesome.testing.scenario.TrainingScenario.TRAINING_SCENARIO;
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.gatling.javaapi.http.HttpDsl.*;
 
 public class BasicSimulation extends Simulation {
 
-    private static final String JSON = "application/json";
+    private static final int SECONDS_IN_MINUTE = 60;
 
-    private final HttpProtocolBuilder httpProtocol = http
-            .baseUrl("http://localhost:4001")
-            .acceptHeader(JSON)
-            .contentTypeHeader(JSON);
+    private static final int RPM = 60;
+    private static final int RPS = RPM / SECONDS_IN_MINUTE;
 
-    ScenarioBuilder scn = scenario("Training scenario")
-            .exec(http("Admin login request")
-                    .post("/users/signin")
-                    .body(ElFileBody("bodies/adminLogin.json"))
-                    .check(status().is(200))
-            );
+    private static final Duration RAMP_UP_TIME = Duration.ofMinutes(2);
+    private static final Duration SIMULATION_TIME = Duration.ofMinutes(5);
+    private static final Duration RAMP_DOWN_TIME = Duration.ofMinutes(1);
 
     {
-        setUp(scn.injectOpen(atOnceUsers(1)).protocols(httpProtocol))
-                .assertions(
-                        List.of(
-                                global().responseTime().max().lt(3000),
-                                global().successfulRequests().percent().is(100d)
-                        )
-                );
+        setUp(TRAINING_SCENARIO.injectOpen(
+                        atOnceUsers(3)
+                )
+                .protocols(HTTP_CONFIG))
+                .assertions(ASSERTIONS);
     }
 }
