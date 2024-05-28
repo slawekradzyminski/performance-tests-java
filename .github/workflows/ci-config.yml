@@ -1,9 +1,9 @@
-name: Run Gatling Tests
+name: Java Gatling Tests
 
-on: push
+on: [push, pull_request]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'corretto'
+          distribution: 'temurin'
 
       - name: Checkout external repository
         uses: actions/checkout@v4
@@ -28,5 +28,36 @@ jobs:
           chmod +x run-docker-compose-ci.sh
           ./run-docker-compose-ci.sh
 
-      - name: Build and test with Maven
-        run: ./mvnw clean gatling:test -Dgatling.simulationClass=com.awesome.testing.BasicSimulation
+      - name: Run Gatling tests
+        run: ./mvnw gatling:test -Dgatling.simulationClass=com.awesome.testing.BasicSimulation
+
+      - name: Find Gatling Report Directory
+        id: find-report
+        run: |
+          REPORT_DIR=$(find target/gatling -type d -name 'basicsimulation-*' | head -n 1)
+          echo "Report directory: $REPORT_DIR"
+          echo "::set-output name=REPORT_DIR::$REPORT_DIR"
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: 'gh-pages'
+          path: 'gh-pages'
+
+      - name: Clear old reports
+        run: |
+          cd gh-pages
+          git rm -rf .
+          git clean -fxd
+
+      - name: Copy report to gh-pages
+        run: |
+          cp -r ${{ steps.find-report.outputs.REPORT_DIR }}/* gh-pages/
+
+      - name: Commit and push
+        run: |
+          cd gh-pages
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update Gatling Report"
+          git push origin gh-pages
