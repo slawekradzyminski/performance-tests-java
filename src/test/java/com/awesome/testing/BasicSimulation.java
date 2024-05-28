@@ -25,7 +25,10 @@ public class BasicSimulation extends Simulation {
             );
 
     {
-        setUp(scn.injectOpen(atOnceUsers(1)).protocols(httpProtocol))
+        setUp(
+                scn.injectOpen(atOnceUsers(1))
+        )
+                .protocols(httpProtocol)
                 .assertions(
                         List.of(
                                 global().responseTime().max().lt(3000),
