@@ -1,0 +1,32 @@
+name: Run Gatling Tests
+
+on: push
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Checkout external repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'slawekradzyminski/awesome-localstack'
+          path: 'awesome-localstack'
+
+      - name: Run Docker Compose
+        run: |
+          cd awesome-localstack
+          chmod +x run-docker-compose-ci.sh
+          ./run-docker-compose-ci.sh
+
+      - name: Build and test with Maven
+        run: ./mvnw clean gatling:test -Dgatling.simulationClass=com.awesome.testing.BasicSimulation
