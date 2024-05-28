@@ -32,11 +32,13 @@ jobs:
         run: ./mvnw gatling:test -Dgatling.simulationClass=com.awesome.testing.BasicSimulation
 
       - name: Find Gatling Report Directory
+        if: always()
         id: find-report
         run: |
           REPORT_DIR=$(find target/gatling -type d -name 'basicsimulation-*' | head -n 1)
           echo "Report directory: $REPORT_DIR"
           echo "::set-output name=REPORT_DIR::$REPORT_DIR"
+
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
         with:
@@ -44,16 +46,19 @@ jobs:
           path: 'gh-pages'
 
       - name: Clear old reports
+        if: always()
         run: |
           cd gh-pages
           git rm -rf .
           git clean -fxd
 
       - name: Copy report to gh-pages
+        if: always()
         run: |
           cp -r ${{ steps.find-report.outputs.REPORT_DIR }}/* gh-pages/
 
       - name: Commit and push
+        if: always()
         run: |
           cd gh-pages
           git config user.name github-actions
