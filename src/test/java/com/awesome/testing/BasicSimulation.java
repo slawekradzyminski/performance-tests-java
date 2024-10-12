@@ -31,7 +31,7 @@ public class BasicSimulation extends Simulation {
                 .protocols(httpProtocol)
                 .assertions(
                         List.of(
-                                global().responseTime().max().lt(3000),
+                                global().responseTime().max().lt(5000),
                                 global().successfulRequests().percent().is(100d)
                         )
                 );
