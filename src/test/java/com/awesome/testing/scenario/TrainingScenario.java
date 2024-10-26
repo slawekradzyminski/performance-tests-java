@@ -5,6 +5,7 @@ import io.gatling.javaapi.core.ScenarioBuilder;
 import java.time.Duration;
 
 import static com.awesome.testing.feeder.UserFeeder.USER_FEEDER;
+import static com.awesome.testing.http.GetUsers.GET_ALL_USERS_REQUEST;
 import static com.awesome.testing.http.Login.LOGIN_REQUEST;
 import static com.awesome.testing.http.Register.REGISTER_REQUEST;
 import static io.gatling.javaapi.core.CoreDsl.*;
@@ -15,6 +16,8 @@ public class TrainingScenario {
             .feed(USER_FEEDER)
             .exec(REGISTER_REQUEST)
             .pause(Duration.ofSeconds(5))
-            .exec(LOGIN_REQUEST);
+            .exec(LOGIN_REQUEST)
+            .pause(Duration.ofMillis(500))
+            .exec(GET_ALL_USERS_REQUEST);
 
 }
