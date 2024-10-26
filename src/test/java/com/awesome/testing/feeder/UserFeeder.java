@@ -13,7 +13,9 @@ public class UserFeeder {
     private static final Faker FAKER = new Faker();
     private static final int MAX_NUMBER_OF_ATTEMPTS = 20;
 
-    public static final Iterator<Map<String, Object>> USER_FEEDER = Stream.generate(() -> {
+    public static final Iterator<Map<String, Object>> USER_FEEDER = Stream.generate(UserFeeder::getMap).iterator();
+
+    private static Map<String, Object> getMap() {
         Map<String, Object> userData;
         int attempts = 0;
 
@@ -23,13 +25,13 @@ public class UserFeeder {
             if (checkValues(userData)) {
                 return userData;
             } else {
-                log.info("Attempt {} failed for generated data: {}", attempts + 1, userData);
+                log.warn("Attempt {} failed for generated data: {}", attempts + 1, userData);
                 attempts++;
             }
         }
 
         throw new RuntimeException("Failed to generate valid user data after 20 attempts");
-    }).iterator();
+    }
 
     private static boolean checkValues(Map<String, Object> userData) {
         return userData.values().stream()
