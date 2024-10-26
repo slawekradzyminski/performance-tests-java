@@ -11,7 +11,7 @@ public class Login {
     public static final HttpRequestActionBuilder LOGIN_REQUEST =
             http("Login request")
                     .post("/users/signin")
-                    .body(ElFileBody("bodies/adminLogin.json"))
+                    .body(ElFileBody("bodies/login.json"))
                     .check(status().is(200));
 
 }
