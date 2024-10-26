@@ -2,11 +2,7 @@ package com.awesome.testing.http;
 
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
 
-import java.util.List;
-import java.util.function.Function;
-
 import static com.awesome.testing.util.ListUtil.listLengthIsBiggerThan;
-import static io.gatling.javaapi.core.CoreDsl.ElFileBody;
 import static io.gatling.javaapi.core.CoreDsl.jsonPath;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
