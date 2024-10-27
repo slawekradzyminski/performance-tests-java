@@ -2,16 +2,14 @@ package com.awesome.testing.scenario;
 
 import io.gatling.javaapi.core.ScenarioBuilder;
 
-import java.time.Duration;
-
+import static com.awesome.testing.feeder.UserFeeder.USER_FEEDER;
 import static com.awesome.testing.http.Register.REGISTER_REQUEST;
-import static io.gatling.javaapi.core.CoreDsl.*;
+import static io.gatling.javaapi.core.CoreDsl.scenario;
 
 public class RegisterScenario {
 
-    public static final ScenarioBuilder REGISTER_SCENARIO = scenario("Training scenario")
-            .feed(csv("data/fake_users.csv").queue())
-            .pause(Duration.ofSeconds(1), Duration.ofMinutes(10))
+    public static final ScenarioBuilder REGISTER_SCENARIO = scenario("Register scenario")
+            .feed(USER_FEEDER)
             .exec(REGISTER_REQUEST);
 
 }
