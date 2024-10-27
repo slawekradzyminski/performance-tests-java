@@ -3,7 +3,7 @@ Gatling performance tests for my [localstack](https://github.com/slawekradzymins
 ## Running
 
 ```commandline
-./mvnw gatling:test
+./mvnw clean gatling:test "-Dgatling.simulationClass=com.awesome.testing.BasicSimulation"
 ```
 
 ## Good resources
