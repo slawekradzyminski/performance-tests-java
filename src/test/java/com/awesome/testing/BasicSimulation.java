@@ -9,6 +9,7 @@ import static com.awesome.testing.core.HttpConfig.HTTP_CONFIG;
 import static com.awesome.testing.scenario.TrainingScenario.TRAINING_SCENARIO;
 import static io.gatling.javaapi.core.CoreDsl.*;
 
+@SuppressWarnings("unused")
 public class BasicSimulation extends Simulation {
 
     private static final int DESIRED_RPM = 60;
