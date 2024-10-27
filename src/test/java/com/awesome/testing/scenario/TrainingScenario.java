@@ -1,6 +1,8 @@
 package com.awesome.testing.scenario;
 
+import io.gatling.javaapi.core.Choice;
 import io.gatling.javaapi.core.ScenarioBuilder;
+import io.gatling.javaapi.http.HttpRequestActionBuilder;
 
 import java.time.Duration;
 
@@ -22,12 +24,15 @@ public class TrainingScenario {
             .pause(Duration.ofSeconds(5))
             .exec(LOGIN_REQUEST)
             .pause(Duration.ofMillis(500))
-            .exec(GET_ALL_USERS_REQUEST)
+            .repeat(2).on(exec(GET_ALL_USERS_REQUEST))
             .pause(Duration.ofSeconds(2))
-            .exec(GET_SINGLE_USER_REQUEST)
+            .randomSwitch().on(runWithProbability(50, GET_SINGLE_USER_REQUEST))
             .pause(Duration.ofSeconds(2))
-            .exec(EDIT_USER_REQUEST)
+            .randomSwitch().on(runWithProbability(25, EDIT_USER_REQUEST))
             .pause(Duration.ofSeconds(1), Duration.ofSeconds(2))
-            .exec(DELETE_USER_REQUEST);
+            .randomSwitch().on(runWithProbability(25, DELETE_USER_REQUEST));
 
+    private static Choice.WithWeight runWithProbability(int percent, HttpRequestActionBuilder getSingleUserRequest) {
+        return percent(percent).then(exec(getSingleUserRequest));
+    }
 }
