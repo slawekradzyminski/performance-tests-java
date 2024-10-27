@@ -2,6 +2,7 @@ package com.awesome.testing.feeder;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,38 +16,49 @@ public class UserFeeder {
 
     public static final Iterator<Map<String, Object>> USER_FEEDER = Stream.generate(UserFeeder::getMap).iterator();
 
-    private static Map<String, Object> getMap() {
-        Map<String, Object> userData;
+    public static String generateFirstName() {
+        return generateValue(() -> FAKER.name().firstName());
+    }
+
+    public static String generateLastName() {
+        return generateValue(() -> FAKER.name().lastName());
+    }
+
+    public static String generateUsername() {
+        return generateValue(() -> FAKER.internet().username());
+    }
+
+    public static String generatePassword() {
+        return generateValue(() -> FAKER.internet().password());
+    }
+
+    public static String generateEmail() {
+        return generateValue(() -> FAKER.internet().emailAddress());
+    }
+
+    private static String generateValue(Supplier<String> generator) {
+        String value;
         int attempts = 0;
 
-        while (attempts < MAX_NUMBER_OF_ATTEMPTS) {
-            userData = generateValues();
+        do {
+            value = generator.get();
+            attempts++;
+        } while (value.length() < 4 && attempts < MAX_NUMBER_OF_ATTEMPTS);
 
-            if (checkValues(userData)) {
-                return userData;
-            } else {
-                log.warn("Attempt {} failed for generated data: {}", attempts + 1, userData);
-                attempts++;
-            }
+        if (value.length() < 4) {
+            throw new RuntimeException("Failed to generate valid value after 20 attempts");
         }
 
-        throw new RuntimeException("Failed to generate valid user data after 20 attempts");
+        return value;
     }
 
-    private static boolean checkValues(Map<String, Object> userData) {
-        return userData.values().stream()
-                .allMatch(value -> value.toString().length() >= 4);
-    }
-
-    private static Map<String, Object> generateValues() {
+    private static Map<String, Object> getMap() {
         return Map.of(
-                "firstName", FAKER.name().firstName(),
-                "lastName", FAKER.name().lastName(),
-                "username", FAKER.internet().username(),
-                "password", FAKER.internet().password(),
-                "email", FAKER.internet().emailAddress()
+                "firstName", generateFirstName(),
+                "lastName", generateLastName(),
+                "username", generateUsername(),
+                "password", generatePassword(),
+                "email", generateEmail()
         );
     }
-
-
 }
