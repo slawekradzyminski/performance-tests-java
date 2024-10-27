@@ -19,7 +19,7 @@ public class TrainingScenario {
 
     public static final ScenarioBuilder TRAINING_SCENARIO = scenario("Training scenario")
             .feed(USER_FEEDER)
-            .exec(REGISTER_REQUEST)
+            .exec(REGISTER_REQUEST) // 60 rpm - request wobec którego robiliśmy proporcje
             .exitHereIfFailed()
             .pause(Duration.ofSeconds(5))
             .exec(LOGIN_REQUEST)
