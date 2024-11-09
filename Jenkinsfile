@@ -27,11 +27,16 @@ pipeline {
     
     post {
         always {
-            // Archive Gatling reports
             archiveArtifacts artifacts: 'target/gatling/**/*', fingerprint: true
             
-            // Publish Gatling reports
-            gatlingArchive()
+            publishHTML(target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'target/gatling',
+                reportFiles: '**/index.html',
+                reportName: 'Gatling Report'
+            ])
         }
         failure {
             echo 'Tests failed! Check the Gatling reports for details.'
