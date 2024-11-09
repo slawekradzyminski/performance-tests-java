@@ -14,13 +14,13 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                sh './mvnw install -DskipTests'
+                sh 'mvn install -DskipTests'
             }
         }
         
         stage('Run Gatling Tests') {
             steps {
-                sh './mvnw gatling:test "-Dgatling.simulationClass=com.awesome.testing.BasicSimulation"'
+                sh 'mvn gatling:test "-Dgatling.simulationClass=com.awesome.testing.BasicSimulation"'
             }
         }
     }
