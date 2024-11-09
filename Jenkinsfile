@@ -20,7 +20,7 @@ pipeline {
         
         stage('Run Gatling Tests') {
             steps {
-                sh 'mvn gatling:test "-Dgatling.simulationClass=com.awesome.testing.BasicSimulation"'
+                sh 'mvn gatling:test "-Dgatling.simulationClass=com.awesome.testing.CISimulation"'
             }
         }
     }
