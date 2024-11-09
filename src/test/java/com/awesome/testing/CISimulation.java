@@ -10,19 +10,15 @@ import static io.gatling.javaapi.http.HttpDsl.*;
 
 public class CISimulation extends Simulation {
 
-    private static final String JSON = "application/json";
-
     private final HttpProtocolBuilder httpProtocol = http
-            .baseUrl("http://backend:4001")
-            .acceptHeader(JSON)
-            .contentTypeHeader(JSON);
+            .baseUrl("https://test-api.k6.io");
 
-    ScenarioBuilder scn = scenario("Training scenario")
-            .exec(http("Admin login request")
-                    .post("/users/signin")
-                    .body(ElFileBody("bodies/adminLogin.json"))
+    ScenarioBuilder scn = scenario("Basic request scenario")
+            .exec(http("Homepage request")
+                    .get("/")
                     .check(status().is(200))
-            );
+            )
+            .pause(1);
 
     {
         setUp(

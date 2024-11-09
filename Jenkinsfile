@@ -14,13 +14,13 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                sh 'mvn install -DskipTests'
+                sh 'mvn -B -q install -DskipTests'
             }
         }
         
         stage('Run Gatling Tests') {
             steps {
-                sh 'mvn gatling:test "-Dgatling.simulationClass=com.awesome.testing.CISimulation"'
+                sh 'mvn -B -q gatling:test "-Dgatling.simulationClass=com.awesome.testing.CISimulation"'
             }
         }
     }
