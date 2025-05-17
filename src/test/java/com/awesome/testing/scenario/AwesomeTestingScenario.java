@@ -11,6 +11,7 @@ import static com.awesome.testing.http.GetProducts.GET_PRODUCTS;
 import static com.awesome.testing.http.PostCartItems.ADD_TO_BASKET;
 import static com.awesome.testing.http.PostUsersSignIn.LOGIN_REQUEST;
 import static com.awesome.testing.http.PostUsersSignUp.REGISTER_REQUEST;
+import static com.awesome.testing.http.PutUserEdit.EDIT_USER;
 import static io.gatling.javaapi.core.CoreDsl.*;
 
 /**
@@ -28,7 +29,9 @@ public class AwesomeTestingScenario {
             .exec(GET_ME)
             .pause(Duration.ofSeconds(1))
             .exec(GET_PRODUCTS)
-            .pause(Duration.ofSeconds(4))
-            .exec(ADD_TO_BASKET);
+            .pause(Duration.ofSeconds(2))
+            .exec(ADD_TO_BASKET)
+            .pause(Duration.ofSeconds(2))
+            .exec(EDIT_USER);
 
 }
