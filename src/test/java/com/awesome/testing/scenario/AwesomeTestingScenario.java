@@ -6,6 +6,7 @@ import io.gatling.javaapi.core.ScenarioBuilder;
 import java.time.Duration;
 
 import static com.awesome.testing.feeder.UserGenerator.USER_FEEDER;
+import static com.awesome.testing.http.GetMe.GET_ME;
 import static com.awesome.testing.http.PostUsersSignIn.LOGIN_REQUEST;
 import static com.awesome.testing.http.PostUsersSignUp.REGISTER_REQUEST;
 import static io.gatling.javaapi.core.CoreDsl.*;
@@ -20,6 +21,8 @@ public class AwesomeTestingScenario {
             .feed(USER_FEEDER)
             .exec(REGISTER_REQUEST)
             .pause(Duration.ofSeconds(4))
-            .exec(LOGIN_REQUEST);
+            .exec(LOGIN_REQUEST)
+            .pause(Duration.ofSeconds(1))
+            .exec(GET_ME);
 
 }

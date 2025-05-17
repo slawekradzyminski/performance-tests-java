@@ -7,13 +7,13 @@ import static io.gatling.javaapi.core.CoreDsl.jsonPath;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public class PostUsersSignIn {
+public class GetMe {
 
-    public static final HttpRequestActionBuilder LOGIN_REQUEST =
-            http("Login request")
-                    .post("/users/signin")
-                    .body(ElFileBody("bodies/login.json"))
+    public static final HttpRequestActionBuilder GET_ME =
+            http("Get me")
+                    .get("/users/me")
+                    .header("Authorization", "Bearer #{token}")
                     .check(status().is(200))
-                    .check(jsonPath("$.token").exists().saveAs("token"));
+                    .check(jsonPath("$.username").is(session -> session.getString("username")));
 
 }
