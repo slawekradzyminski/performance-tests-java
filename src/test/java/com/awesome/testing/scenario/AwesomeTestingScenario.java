@@ -3,7 +3,11 @@ package com.awesome.testing.scenario;
 import io.gatling.javaapi.core.FeederBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
 
+import java.time.Duration;
+
+import static com.awesome.testing.feeder.UserGenerator.USER_FEEDER;
 import static com.awesome.testing.http.PostUsersSignIn.LOGIN_REQUEST;
+import static com.awesome.testing.http.PostUsersSignUp.REGISTER_REQUEST;
 import static io.gatling.javaapi.core.CoreDsl.*;
 
 /**
@@ -12,10 +16,10 @@ import static io.gatling.javaapi.core.CoreDsl.*;
  */
 public class AwesomeTestingScenario {
 
-    public static final FeederBuilder.FileBased<Object> CREDENTIALS_FEEDER = jsonFile("data/credentials.json").circular();
-
-    public static ScenarioBuilder CUSTOMER_SCENARIO = scenario("Training scenario")
-            .feed(CREDENTIALS_FEEDER)
+    public static ScenarioBuilder CUSTOMER_SCENARIO = scenario("Customer scenario")
+            .feed(USER_FEEDER)
+            .exec(REGISTER_REQUEST)
+            .pause(Duration.ofSeconds(4))
             .exec(LOGIN_REQUEST);
 
 }

@@ -8,9 +8,10 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class PostUsersSignIn {
 
-    public static final HttpRequestActionBuilder LOGIN_REQUEST = http("Admin login request")
-            .post("/users/signin")
-            .body(ElFileBody("bodies/login.json"))
-            .check(status().is(200));
+    public static final HttpRequestActionBuilder LOGIN_REQUEST =
+            http("Login request")
+                    .post("/users/signin")
+                    .body(ElFileBody("bodies/login.json"))
+                    .check(status().is(200));
 
 }
