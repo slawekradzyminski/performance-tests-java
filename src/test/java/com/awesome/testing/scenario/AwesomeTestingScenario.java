@@ -4,8 +4,7 @@ import io.gatling.javaapi.core.FeederBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
 
 import static com.awesome.testing.http.PostUsersSignIn.LOGIN_REQUEST;
-import static io.gatling.javaapi.core.CoreDsl.csv;
-import static io.gatling.javaapi.core.CoreDsl.scenario;
+import static io.gatling.javaapi.core.CoreDsl.*;
 
 /**
  * Scenariusz piszemy jak test funkcjonalny, który odpowiada jednemu typowi użytkownika
@@ -13,7 +12,7 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
  */
 public class AwesomeTestingScenario {
 
-    public static final FeederBuilder.Batchable<String> CREDENTIALS_FEEDER = csv("data/credentials.csv").circular();
+    public static final FeederBuilder.FileBased<Object> CREDENTIALS_FEEDER = jsonFile("data/credentials.json").circular();
 
     public static ScenarioBuilder CUSTOMER_SCENARIO = scenario("Training scenario")
             .feed(CREDENTIALS_FEEDER)
