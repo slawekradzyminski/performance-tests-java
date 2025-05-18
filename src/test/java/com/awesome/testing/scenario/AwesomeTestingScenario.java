@@ -52,14 +52,14 @@ public class AwesomeTestingScenario {
 
     public static ScenarioBuilder CUSTOMER_SCENARIO = scenario("Customer scenario")
             .feed(USER_FEEDER)
-            .exec(REGISTER_REQUEST) // też 1 rps
+            .exec(REGISTER_REQUEST)
             .pause(Duration.ofSeconds(4))
             .exec(LOGIN_REQUEST) // 1 rps - request referencyjny
             .exitHereIfFailed()
             .exec(sendEmail(SCENARIO_PREFIX))
             .exec(repeatWithFraction(4, pause(Duration.ofSeconds(1)).exec(GET_ME)))
             .exec(repeatWithFraction(2, exec(GET_CART)))
-            .exec(repeatWithFraction(0.75, pause(Duration.ofSeconds(2)).exec(GET_USERS)))
+//            .exec(repeatWithFraction(0.75, pause(Duration.ofSeconds(2)).exec(GET_USERS)))
             .exec(repeatWithFraction(4, pause(Duration.ofSeconds(1)).exec(GET_PRODUCTS)))
             .exec(repeatWithFraction(2.5, pause(Duration.ofSeconds(2)).exec(ADD_TO_BASKET)))
             .exec(repeatWithFraction(0.25, pause(Duration.ofSeconds(2)).exec(EDIT_USER)))

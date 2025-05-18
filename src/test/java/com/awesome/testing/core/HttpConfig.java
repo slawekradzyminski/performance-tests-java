@@ -19,4 +19,10 @@ public class HttpConfig {
             .acceptHeader(JSON)
             .contentTypeHeader(JSON);
 
+    public static final HttpProtocolBuilder WS_HTTP_PROTOCOL = http
+            .baseUrl("http://localhost:4001") // Or your configurable base URL
+            .wsBaseUrl("ws://localhost:4001")  // Or your configurable WS base URL
+            .acceptHeader("application/json")
+            .contentTypeHeader("application/json")
+            .wsUnmatchedInboundMessageBufferSize(10); // Optional: buffer for unmatched messages
 }
