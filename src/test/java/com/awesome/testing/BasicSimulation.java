@@ -24,9 +24,9 @@ public class BasicSimulation extends Simulation {
     {
         setUp(
                 CUSTOMER_SCENARIO.injectOpen(
-                        rampUsersPerSec(0).to(DESIRED_RPS).during(Duration.ofMinutes(5)), // ramp up
-                        constantUsersPerSec(DESIRED_RPS).during(Duration.ofMinutes(10)), // peak traffic
-                        rampUsersPerSec(DESIRED_RPS).to(0).during(Duration.ofMinutes(5)) // ramp down
+                        rampUsersPerSec(0).to(DESIRED_RPS).during(Duration.ofMinutes(5)).randomized(), // ramp up
+                        constantUsersPerSec(DESIRED_RPS).during(Duration.ofMinutes(10)).randomized(), // peak traffic
+                        rampUsersPerSec(DESIRED_RPS).to(0).during(Duration.ofMinutes(5)).randomized() // ramp down
                 )
         )
                 .protocols(HTTP_CONFIG)

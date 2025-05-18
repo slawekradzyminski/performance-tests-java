@@ -8,6 +8,7 @@ import static com.awesome.testing.feeder.UserGenerator.USER_FEEDER;
 import static com.awesome.testing.http.GetCart.GET_CART;
 import static com.awesome.testing.http.GetMe.GET_ME;
 import static com.awesome.testing.http.GetProducts.GET_PRODUCTS;
+import static com.awesome.testing.http.GetUsers.GET_USERS;
 import static com.awesome.testing.http.PostCartItems.ADD_TO_BASKET;
 import static com.awesome.testing.http.PostQrCreate.CREATE_QR_CODE;
 import static com.awesome.testing.http.PostUsersSignIn.LOGIN_REQUEST;
@@ -30,6 +31,7 @@ public class AwesomeTestingScenario {
             .exitHereIfFailed()
             .exec(repeatWithFraction(4, pause(Duration.ofSeconds(1)).exec(GET_ME)))
             .exec(repeatWithFraction(2, exec(GET_CART)))
+            .exec(repeatWithFraction(0.75, pause(Duration.ofSeconds(2)).exec(GET_USERS)))
             .exec(repeatWithFraction(4, pause(Duration.ofSeconds(1)).exec(GET_PRODUCTS)))
             .exec(repeatWithFraction(2.5, pause(Duration.ofSeconds(2)).exec(ADD_TO_BASKET)))
             .exec(repeatWithFraction(0.25, pause(Duration.ofSeconds(2)).exec(EDIT_USER)))
