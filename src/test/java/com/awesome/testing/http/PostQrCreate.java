@@ -1,7 +1,6 @@
 package com.awesome.testing.http;
 
 import com.awesome.testing.dto.CreateQrDto;
-import io.gatling.javaapi.core.Session;
 import io.gatling.javaapi.http.HttpRequestActionBuilder;
 import lombok.SneakyThrows;
 
@@ -18,14 +17,14 @@ public class PostQrCreate {
                     .post("/qr/create")
                     .header("Authorization", "Bearer #{token}")
                     .header("Accept", "image/png")
-                    .body(StringBody(PostQrCreate::body))
+                    .body(StringBody(body()))
                     .check(
                             status().is(200),
                             header("Content-Type").is("image/png;charset=UTF-8")
                     );
 
     @SneakyThrows
-    private static String body(Session session) {
+    private static String body() {
         CreateQrDto dto = CreateQrDto.builder()
                 .text(FAKER.lorem().sentence())
                 .build();

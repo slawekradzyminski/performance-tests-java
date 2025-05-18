@@ -13,4 +13,10 @@ public class HttpConfig {
             .acceptHeader(JSON)
             .contentTypeHeader(JSON);
 
+
+    public static final HttpProtocolBuilder MAILHOG_HTTP_CONFIG = http
+            .baseUrl("http://localhost:8025")
+            .acceptHeader(JSON)
+            .contentTypeHeader(JSON);
+
 }

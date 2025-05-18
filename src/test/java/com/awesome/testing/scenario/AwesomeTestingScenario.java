@@ -1,8 +1,15 @@
 package com.awesome.testing.scenario;
 
 import io.gatling.javaapi.core.ScenarioBuilder;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.awesome.testing.feeder.UserGenerator.USER_FEEDER;
 import static com.awesome.testing.http.GetCart.GET_CART;
@@ -10,6 +17,7 @@ import static com.awesome.testing.http.GetMe.GET_ME;
 import static com.awesome.testing.http.GetProducts.GET_PRODUCTS;
 import static com.awesome.testing.http.GetUsers.GET_USERS;
 import static com.awesome.testing.http.PostCartItems.ADD_TO_BASKET;
+import static com.awesome.testing.http.PostEmail.sendEmail;
 import static com.awesome.testing.http.PostQrCreate.CREATE_QR_CODE;
 import static com.awesome.testing.http.PostUsersSignIn.LOGIN_REQUEST;
 import static com.awesome.testing.http.PostUsersSignUp.REGISTER_REQUEST;
@@ -21,7 +29,26 @@ import static io.gatling.javaapi.core.CoreDsl.*;
  * Scenariusz piszemy jak test funkcjonalny, który odpowiada jednemu typowi użytkownika
  * Wszystko co jest wykonywane w ramach scenariusza to jedna Gatlingowa sesja
  */
+@Slf4j
 public class AwesomeTestingScenario {
+
+    private static final String SCENARIO_PREFIX = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
+            .format(LocalDateTime.now());
+
+    static {
+        log.info("Executing Gatling scenario with prefix: {}", SCENARIO_PREFIX);
+
+        try {
+            Files.write(
+                    Paths.get("prefix.txt"),
+                    SCENARIO_PREFIX.getBytes(),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING
+            );
+        } catch (IOException e) {
+            log.error("Failed to write scenario prefix to prefix.txt", e);
+        }
+    }
 
     public static ScenarioBuilder CUSTOMER_SCENARIO = scenario("Customer scenario")
             .feed(USER_FEEDER)
@@ -29,6 +56,7 @@ public class AwesomeTestingScenario {
             .pause(Duration.ofSeconds(4))
             .exec(LOGIN_REQUEST) // 1 rps - request referencyjny
             .exitHereIfFailed()
+            .exec(sendEmail(SCENARIO_PREFIX))
             .exec(repeatWithFraction(4, pause(Duration.ofSeconds(1)).exec(GET_ME)))
             .exec(repeatWithFraction(2, exec(GET_CART)))
             .exec(repeatWithFraction(0.75, pause(Duration.ofSeconds(2)).exec(GET_USERS)))

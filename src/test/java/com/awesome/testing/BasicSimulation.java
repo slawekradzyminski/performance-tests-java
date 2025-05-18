@@ -7,8 +7,7 @@ import java.time.Duration;
 import static com.awesome.testing.core.GlobalAssertions.ASSERTIONS;
 import static com.awesome.testing.core.HttpConfig.HTTP_CONFIG;
 import static com.awesome.testing.scenario.AwesomeTestingScenario.CUSTOMER_SCENARIO;
-import static io.gatling.javaapi.core.CoreDsl.constantUsersPerSec;
-import static io.gatling.javaapi.core.CoreDsl.rampUsersPerSec;
+import static io.gatling.javaapi.core.CoreDsl.*;
 
 /**
  * Tutaj mamy część wydajnościową czyli tutaj definiujemy ilu będzie poszczególnych użytkowników
