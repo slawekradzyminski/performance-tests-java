@@ -6,7 +6,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>target/gatling/traininglogs%i.log</fileNamePattern>
             <minIndex>1</minIndex>
-            <maxIndex>1</maxIndex>
+            <maxIndex>1000</maxIndex>
         </rollingPolicy>
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <maxFileSize>3MB</maxFileSize>
