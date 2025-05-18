@@ -13,6 +13,7 @@ import static com.awesome.testing.http.PostQrCreate.CREATE_QR_CODE;
 import static com.awesome.testing.http.PostUsersSignIn.LOGIN_REQUEST;
 import static com.awesome.testing.http.PostUsersSignUp.REGISTER_REQUEST;
 import static com.awesome.testing.http.PutUserEdit.EDIT_USER;
+import static com.awesome.testing.util.RpsHelper.repeatWithFraction;
 import static io.gatling.javaapi.core.CoreDsl.*;
 
 /**
@@ -23,18 +24,15 @@ public class AwesomeTestingScenario {
 
     public static ScenarioBuilder CUSTOMER_SCENARIO = scenario("Customer scenario")
             .feed(USER_FEEDER)
-            .exec(REGISTER_REQUEST)
+            .exec(REGISTER_REQUEST) // też 1 rps
             .pause(Duration.ofSeconds(4))
-            .exec(LOGIN_REQUEST)
-            .pause(Duration.ofSeconds(1))
-            .exec(GET_ME)
-            .exec(GET_CART)
-            .pause(Duration.ofSeconds(1))
-            .exec(GET_PRODUCTS)
-            .pause(Duration.ofSeconds(2))
-            .exec(ADD_TO_BASKET)
-            .pause(Duration.ofSeconds(2))
-            .exec(EDIT_USER)
-            .pause(Duration.ofSeconds(1))
-            .exec(CREATE_QR_CODE);
+            .exec(LOGIN_REQUEST) // 1 rps - request referencyjny
+            .exitHereIfFailed()
+            .exec(repeatWithFraction(4, pause(Duration.ofSeconds(1)).exec(GET_ME)))
+            .exec(repeatWithFraction(2, exec(GET_CART)))
+            .exec(repeatWithFraction(4, pause(Duration.ofSeconds(1)).exec(GET_PRODUCTS)))
+            .exec(repeatWithFraction(2.5, pause(Duration.ofSeconds(2)).exec(ADD_TO_BASKET)))
+            .exec(repeatWithFraction(0.25, pause(Duration.ofSeconds(2)).exec(EDIT_USER)))
+            .exec(repeatWithFraction(0.5, pause(Duration.ofSeconds(1)).exec(CREATE_QR_CODE)));
+
 }
