@@ -14,4 +14,10 @@ public class PostUsersSignUp {
                     .body(ElFileBody("bodies/register.json"))
                     .check(status().is(201));
 
+    public static final HttpRequestActionBuilder REGISTER_ADMIN_REQUEST =
+            http("Register request")
+                    .post("/users/signup")
+                    .body(ElFileBody("bodies/register_admin.json"))
+                    .check(status().is(201));
+
 }
