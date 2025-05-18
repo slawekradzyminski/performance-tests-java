@@ -6,13 +6,12 @@ import static io.gatling.javaapi.core.CoreDsl.jsonPath;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public class GetMe {
+public class GetCart {
 
-    public static final HttpRequestActionBuilder GET_ME =
-            http("Get me")
-                    .get("/users/me")
+    public static final HttpRequestActionBuilder GET_CART =
+            http("Get cart")
+                    .get("/api/cart")
                     .header("Authorization", "Bearer #{token}")
-                    .check(status().is(200))
-                    .check(jsonPath("$.username").is(session -> session.getString("username")));
+                    .check(status().is(200));
 
 }

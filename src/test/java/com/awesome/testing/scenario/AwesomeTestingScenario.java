@@ -1,12 +1,11 @@
 package com.awesome.testing.scenario;
 
-import io.gatling.javaapi.core.FeederBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
 
 import java.time.Duration;
 
-import static com.awesome.testing.feeder.QrTextGenerator.QR_FEEDER;
 import static com.awesome.testing.feeder.UserGenerator.USER_FEEDER;
+import static com.awesome.testing.http.GetCart.GET_CART;
 import static com.awesome.testing.http.GetMe.GET_ME;
 import static com.awesome.testing.http.GetProducts.GET_PRODUCTS;
 import static com.awesome.testing.http.PostCartItems.ADD_TO_BASKET;
@@ -29,6 +28,7 @@ public class AwesomeTestingScenario {
             .exec(LOGIN_REQUEST)
             .pause(Duration.ofSeconds(1))
             .exec(GET_ME)
+            .exec(GET_CART)
             .pause(Duration.ofSeconds(1))
             .exec(GET_PRODUCTS)
             .pause(Duration.ofSeconds(2))
@@ -36,6 +36,5 @@ public class AwesomeTestingScenario {
             .pause(Duration.ofSeconds(2))
             .exec(EDIT_USER)
             .pause(Duration.ofSeconds(1))
-            .feed(QR_FEEDER)
             .exec(CREATE_QR_CODE);
 }

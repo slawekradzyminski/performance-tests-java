@@ -6,6 +6,7 @@ import io.gatling.javaapi.http.HttpRequestActionBuilder;
 import lombok.SneakyThrows;
 
 import static com.awesome.testing.core.Jackson.getObjectMapper;
+import static com.awesome.testing.feeder.FakerHelper.FAKER;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
 import static io.gatling.javaapi.http.HttpDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.status;
@@ -26,7 +27,7 @@ public class PostQrCreate {
     @SneakyThrows
     private static String body(Session session) {
         CreateQrDto dto = CreateQrDto.builder()
-                .text(session.getString("qrText"))
+                .text(FAKER.lorem().sentence())
                 .build();
         return getObjectMapper().writeValueAsString(dto);
     }
